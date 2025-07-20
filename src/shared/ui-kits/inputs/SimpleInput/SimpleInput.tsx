@@ -8,6 +8,7 @@ interface SearchInputProps {
   className?: string;
   value?: string;
   type?: string;
+  disabled?: boolean;
 }
 
 export const SimpleInput: React.FC<SearchInputProps> = ({
@@ -15,6 +16,7 @@ export const SimpleInput: React.FC<SearchInputProps> = ({
   onBlur = () => {},
   placeholder = "Поиск...",
   type = "text",
+  disabled = false,
 }) => {
   return (
     <input
@@ -23,6 +25,7 @@ export const SimpleInput: React.FC<SearchInputProps> = ({
       onBlur={(e) => onBlur(e.target.value)}
       placeholder={placeholder}
       className={styles.input}
+      disabled={disabled}
     />
   );
 };

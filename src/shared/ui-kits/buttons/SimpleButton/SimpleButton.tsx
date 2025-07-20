@@ -3,17 +3,17 @@ import styles from "./styles.module.scss";
 interface ButtonProps {
   onClick: () => void;
   text: string;
-  disable?: boolean;
+  disabled?: boolean;
 }
 
 export const SimpleButton = ({
   onClick,
   text,
-  disable = false,
+  disabled = false,
 }: ButtonProps) => {
   return (
     <button
-      disabled={disable}
+      disabled={disabled}
       className={styles.button}
       onClick={() => onClick()}
     >

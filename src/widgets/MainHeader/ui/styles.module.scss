@@ -1,7 +1,6 @@
 .header {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
   &__wrapper {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -15,11 +14,6 @@
     letter-spacing: 0;
     color: #333;
     padding: 0 0.5rem;
-  }
-
-  &__navigation {
-    display: flex;
-    align-items: center;
   }
 }
 
@@ -50,6 +44,7 @@
     &__wrapper {
       flex-direction: column;
       padding: 1rem;
+      gap: 1rem;
     }
 
     &__logo-line {

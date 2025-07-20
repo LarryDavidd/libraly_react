@@ -1,19 +1,15 @@
+import cn from "classnames";
 import { BookList } from "../../../entities/Books";
 import { FilterBar } from "../../../widgets/filterBar";
-import { MainHeader } from "../../../widgets/MainHeader";
-import { ParseSection } from "../../../widgets/ParseSection";
+import styles from "./styles.module.scss";
 
 export const MainPage = () => {
   return (
-    <>
-      <MainHeader />
-      <section className="wrapper">
-        <ParseSection />
-      </section>
-      <section className="wrapper">
+    <main className={styles.main}>
+      <div className={cn(styles.main__wrapper, "wrapper")}>
         <FilterBar />
         <BookList />
-      </section>
-    </>
+      </div>
+    </main>
   );
 };

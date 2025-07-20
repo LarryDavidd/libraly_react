@@ -1,1 +1,1 @@
-export { ParseSection } from "./ui/ParseSection";
+export { ParseModal } from "./ui/ParseSection";

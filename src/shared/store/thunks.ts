@@ -97,7 +97,6 @@ export const fetchGenres =
       const response = await fetch(
         import.meta.env.VITE_BASE_URL + "/api/genres"
       );
-      console.log("here");
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
