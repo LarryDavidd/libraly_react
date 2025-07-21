@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../../shared/store/hooks";
 import type { RootState } from "../../../shared/store/store";
 import { fetchAuthors, fetchGenres } from "../../../shared/store/thunks";
 import {
+  resetFilters,
   toggleAuthor,
   toggleGenre,
 } from "../../../shared/store/slices/filter.slice";
@@ -43,8 +44,10 @@ export const FilterBar = ({ isOpen, onClose }: FilterBarProps) => {
 
   return (
     <div className={styles["filter-bar"]}>
-      <div className={styles["filter-bar__close-button"]}>
-        <SimpleButton onClick={onClose} text="x" />
+      <div className={styles["filter-bar__section"]}>
+        <div className={styles["filter-bar__close-button"]}>
+          <SimpleButton onClick={onClose} text="x" />
+        </div>
       </div>
 
       <div className={styles["filter-bar__sections"]}>
@@ -106,6 +109,9 @@ export const FilterBar = ({ isOpen, onClose }: FilterBarProps) => {
               ))}
             </div>
           )}
+        </div>
+        <div className={styles["filter-bar__section"]}>
+          <SimpleButton text="reset" onClick={() => dispatch(resetFilters())} />
         </div>
       </div>
     </div>

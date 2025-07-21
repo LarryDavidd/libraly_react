@@ -19,7 +19,7 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <div style={styles.layout}>
       <MainHeader />
-      <main>{children}</main>
+      {children}
       <Footer />
     </div>
   );
