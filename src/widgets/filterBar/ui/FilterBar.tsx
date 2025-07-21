@@ -1,0 +1,119 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import styles from "./styles.module.scss";
+import { useAppDispatch } from "../../../shared/store/hooks";
+import type { RootState } from "../../../shared/store/store";
+import { fetchAuthors, fetchGenres } from "../../../shared/store/thunks";
+import {
+  resetFilters,
+  toggleAuthor,
+  toggleGenre,
+} from "../../../shared/store/slices/filter.slice";
+import { SimpleButton } from "../../../shared/ui-kits/buttons";
+
+interface FilterBarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const FilterBar = ({ isOpen, onClose }: FilterBarProps) => {
+  const dispatch = useAppDispatch();
+  const [showAuthors, setShowAuthors] = useState(false);
+  const [showGenres, setShowGenres] = useState(false);
+
+  const { authors } = useSelector((state: RootState) => state.authors);
+  const { genres } = useSelector((state: RootState) => state.genres);
+  const { authors: selectedAuthors, genres: selectedGenres } = useSelector(
+    (state: RootState) => state.filter
+  );
+
+  useEffect(() => {
+    dispatch(fetchAuthors());
+    dispatch(fetchGenres());
+  }, [dispatch]);
+
+  const handleAuthorToggle = (authorId: number) => {
+    dispatch(toggleAuthor(authorId));
+  };
+
+  const handleGenreToggle = (genreId: number) => {
+    dispatch(toggleGenre(genreId));
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className={styles["filter-bar"]}>
+      <div className={styles["filter-bar__section"]}>
+        <div className={styles["filter-bar__close-button"]}>
+          <SimpleButton onClick={onClose} text="x" />
+        </div>
+      </div>
+
+      <div className={styles["filter-bar__sections"]}>
+        <div className={styles["filter-bar__section"]}>
+          <button
+            className={styles["filter-bar__spoiler-button"]}
+            onClick={() => setShowAuthors(!showAuthors)}
+          >
+            <h3 className={styles["filter-bar__title"]}>
+              Authors {showAuthors ? "▼" : "▶"}
+            </h3>
+          </button>
+
+          {showAuthors && (
+            <div className={styles["filter-bar__options"]}>
+              {authors.map((author) => (
+                <label key={author.id} className={styles["filter-bar__option"]}>
+                  <input
+                    type="checkbox"
+                    className={styles["filter-bar__checkbox"]}
+                    checked={selectedAuthors.includes(author.id)}
+                    onChange={() => handleAuthorToggle(author.id)}
+                  />
+                  <span className={styles["filter-bar__label"]}>
+                    {`${author.first_name} ${author.last_name || ""} ${
+                      author.middle_name ?? ""
+                    }`.trim()}
+                  </span>
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className={styles["filter-bar__section"]}>
+          <button
+            className={styles["filter-bar__spoiler-button"]}
+            onClick={() => setShowGenres(!showGenres)}
+          >
+            <h3 className={styles["filter-bar__title"]}>
+              Genres {showGenres ? "▼" : "▶"}
+            </h3>
+          </button>
+
+          {showGenres && (
+            <div className={styles["filter-bar__options"]}>
+              {genres.map((genre) => (
+                <label key={genre.id} className={styles["filter-bar__option"]}>
+                  <input
+                    type="checkbox"
+                    className={styles["filter-bar__checkbox"]}
+                    checked={selectedGenres.includes(genre.id)}
+                    onChange={() => handleGenreToggle(genre.id)}
+                  />
+                  <span className={styles["filter-bar__label"]}>
+                    {genre.name}
+                  </span>
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className={styles["filter-bar__section"]}>
+          <SimpleButton text="reset" onClick={() => dispatch(resetFilters())} />
+        </div>
+      </div>
+    </div>
+  );
+};
