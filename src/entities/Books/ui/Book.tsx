@@ -16,7 +16,10 @@ interface BookCardProps {
 
 export const BookCard: React.FC<BookCardProps> = ({ book }) => {
   const authorsText = book.authors
-    .map((author) => `${author.first_name} ${author.last_name}`)
+    .map(
+      (author) =>
+        `${author.first_name} ${author.last_name} ${author.middle_name ?? ""}`
+    )
     .join(", ");
 
   const genresText = book.genres.map((genre) => genre.name).join(", ");

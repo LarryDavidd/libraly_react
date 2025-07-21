@@ -8,8 +8,14 @@ import {
   toggleAuthor,
   toggleGenre,
 } from "../../../shared/store/slices/filter.slice";
+import { SimpleButton } from "../../../shared/ui-kits/buttons";
 
-export const FilterBar = () => {
+interface FilterBarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const FilterBar = ({ isOpen, onClose }: FilterBarProps) => {
   const dispatch = useAppDispatch();
   const [showAuthors, setShowAuthors] = useState(false);
   const [showGenres, setShowGenres] = useState(false);
@@ -33,8 +39,14 @@ export const FilterBar = () => {
     dispatch(toggleGenre(genreId));
   };
 
+  if (!isOpen) return null;
+
   return (
     <div className={styles["filter-bar"]}>
+      <div className={styles["filter-bar__close-button"]}>
+        <SimpleButton onClick={onClose} text="x" />
+      </div>
+
       <div className={styles["filter-bar__sections"]}>
         <div className={styles["filter-bar__section"]}>
           <button
@@ -57,7 +69,9 @@ export const FilterBar = () => {
                     onChange={() => handleAuthorToggle(author.id)}
                   />
                   <span className={styles["filter-bar__label"]}>
-                    {`${author.first_name} ${author.last_name || ""}`.trim()}
+                    {`${author.first_name} ${author.last_name || ""} ${
+                      author.middle_name ?? ""
+                    }`.trim()}
                   </span>
                 </label>
               ))}

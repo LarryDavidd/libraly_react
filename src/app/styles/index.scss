@@ -7,6 +7,10 @@ body {
   padding: 0;
 }
 :root {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+
   font-size: 10px;
   font-family: "Montserrat", "Plus Jakarta Sans", sans-serif;
   font-weight: 400;

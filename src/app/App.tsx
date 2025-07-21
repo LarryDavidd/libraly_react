@@ -1,15 +1,12 @@
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
-import { Footer } from "../shared/components";
-import { MainHeader } from "../widgets/MainHeader";
+import { Layout } from "./layout";
 
 const App = () => {
   return (
-    <>
-      <MainHeader />
+    <Layout>
       <RouterProvider router={router} />
-      <Footer />
-    </>
+    </Layout>
   );
 };
 
